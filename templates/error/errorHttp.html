@@ -1,0 +1,10 @@
+{% extends "main.html" %}
+
+{% block body %}
+    <h1>Error {{ errorCode }}</h1>
+    <h2>Something wrong happened. Please contact system administrator</h2>
+    {% if errorMessage is not none %}
+        <h2>Message: {{ errorMessage }}</h2>
+    {% endif%}
+    <button class="play-button"><a href="/">Accueil</a></button>
+{% endblock %}
