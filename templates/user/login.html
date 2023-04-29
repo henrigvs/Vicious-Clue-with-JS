@@ -1,0 +1,80 @@
+{% extends "main.html" %}
+
+{% block body %}
+
+{% if userConnectionStatus %}
+    <h1 style="margin-bottom: 25px">Welcome !</h1>
+    <h2 style="margin-bottom: 15px">___________________________</h2>
+    <table class="table mt-4">
+        <tbody>
+            <tr>
+                <th>First Name</th>
+                <td>{{ userName }}</td>
+            </tr>
+            <tr>
+                <th>Last Name</th>
+                <td>{{ userLastName }}</td>
+            </tr>
+            <tr>
+                <th>Email</th>
+                <td>{{ userEmail }}</td>
+            </tr>
+            <tr>
+                <th>Role</th>
+                <td>{{ userRole }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <form action="{{ url_for('editUser.editUser', playerId=userID) }}" method="GET" style="display: flex; flex-direction: column">
+        <button class="btn-confirmation-edit" type="submit">Edit profile</button>
+    </form>
+
+
+    <h2>___________________________</h2>
+    <h2 style="margin-top: 25px">You are logged in</h2>
+    <button class="play-button"><a href="/createRiddle">Create riddle</a></button>
+
+    <form action="{{ url_for('login.logoutUser') }}" method="POST" style="display: flex; flex-direction: column">
+        <button class="btn-confirmation-edit" type="submit">Logout</button>
+    </form>
+
+{% else %}
+    <form action="{{ url_for('login.loginUser') }}" method="POST" style="display: flex; flex-direction: column">
+        {{ form.csrf_token }}
+        <div class="form-row my-2">
+            {{ form.email.label }} {{ form.email(size=70, class='new-value') }}
+            {% with errors = form.email.errors %}
+                {% if errors %}
+                    <ul class="errors">
+                        {% for error in errors %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            {% endwith %}
+        </div>
+        <div class="form-row my-2">
+            {{ form.password.label }} {{ form.password(size=70, class='new-value') }}
+            {% with errors = form.password.errors %}
+                {% if errors %}
+                    <ul class="errors">
+                        {% for error in errors %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            {% endwith %}
+        </div>
+        {% if errorMessage %}
+            <p>{{ errorMessage }}</p>
+        {% endif %}
+
+        <button class="btn-confirmation-edit" type="submit">Confirm</button>
+    </form>
+
+    <h1>You don't have an account yet?</h1>
+    <button class="play-button"><a href="/signUp">Sign up</a></button>
+{% endif %}
+
+{% endblock %}

@@ -1,0 +1,38 @@
+{% extends "main.html" %}
+
+{% block body %}
+
+<h1 style="margin-bottom: 25px">User Details</h1>
+<h2 style="margin-bottom: 15px">___________________________</h2>
+{% if errorMessage %}
+    <h2>{{ errorMessage }}</h2>
+{% else %}
+    <table>
+        <tbody>
+            <tr>
+                <th>User ID</th>
+                <td>{{ playerId }}</td>
+            </tr>
+            <tr>
+                <th>First Name</th>
+                <td>{{ playerFirstName }}</td>
+            </tr>
+            <tr>
+                <th>Last Name</th>
+                <td>{{ playerLastName }}</td>
+            </tr>
+            <tr>
+                <th>Email</th>
+                <td>{{ playerEmail }}</td>
+            </tr>
+            <tr>
+                <th>Role</th>
+                <td>{{ playerRole }}</td>
+            </tr>
+        </tbody>
+    </table>
+    <h2>___________________________</h2>
+{% endif %}
+
+
+{% endblock %}

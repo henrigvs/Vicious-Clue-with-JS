@@ -1,0 +1,35 @@
+{% extends "main.html" %}
+
+{% block body %}
+    <h1>Edit Riddle</h1>
+    {% if error_message %}
+        <p>{{ error_message }}</p>
+    {% endif %}
+    <form action="{{ url_for('edit.editRiddle', riddleId=riddle.riddleId) }}" method="POST" style="display: flex; flex-direction: column;">
+        <p class="attribute">Description</p>
+        <input class="riddle-new-input" type="text" id="description" name="description" value="{{ riddle.description }}" required>
+
+        <p class="attribute">Solution</p>
+        <input class="riddle-new-input" type="text" id="solution" name="solution" value="{{ riddle.solution }}" required>
+
+        <p class="attribute">Hint</p>
+        <input class="riddle-new-input" type="text" id="clue" name="clue" value="{{ riddle.clue }}" required>
+
+        <p class="attribute">Difficulty Level</p>
+        <div class="custom-number-input">
+            <button class="btn-edit left" type="button" onclick="decrement()">-</button>
+            <input class="new-value-difficulty" type="number" id="difficulty" name="difficulty" min="0" max="5" value="{{ riddle.difficulty }}" required>
+            <button class="btn-edit right" type="button" onclick="increment()">+</button>
+        </div>
+
+        <div style="display: flex; justify-content: center; margin-top: 1rem;">
+            <button class="btn-confirmation-edit" type="submit">Edit</button>
+        </div>
+    </form>
+        <div>
+        <form action="{{ url_for('edit.deleteRiddle', riddleId=riddle.riddleId) }}" method="POST">
+
+            <button class="btn-confirmation-delete" type="submit">Delete</button>
+        </form>
+        </div>
+{% endblock %}

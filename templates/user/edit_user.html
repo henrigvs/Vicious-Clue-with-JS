@@ -1,0 +1,74 @@
+{% extends "main.html" %}
+{% block body %}
+
+<form method="POST" action="{{ url_for('editUser.editUser', playerId=userID) }}">
+    {{ form.csrf_token }}
+    <div class="form-row my-2">
+        {{ form.firstName.label }} {{ form.firstName(size=30, class='new-value', value=defaultFirstName) }}
+        {% with errors = form.firstName.errors %}
+            {% if errors %}
+                <ul class="errors">
+                    {% for error in errors %}
+                        <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        {% endwith %}
+    </div>
+    <div class="form-row my-2">
+        {{ form.lastName.label }} {{ form.lastName(size=30, class='new-value', value=defaultLastName) }}
+        {% with errors = form.lastName.errors %}
+            {% if errors %}
+                <ul class="errors">
+                    {% for error in errors %}
+                        <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        {% endwith %}
+    </div>
+    <div class="form-row my-2">
+        {{ form.email.label }} {{ form.email(size=50, class='new-value', value=defaultEmail) }}
+        {% with errors = form.email.errors %}
+            {% if errors %}
+                <ul class="errors">
+                    {% for error in errors %}
+                        <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        {% endwith %}
+    </div>
+    <div class="form-row my-2">
+        {{ form.confirmEmail.label }} {{ form.confirmEmail(size=50, class='new-value') }}
+        {% with errors = form.confirmEmail.errors %}
+            {% if errors %}
+                <ul class="errors">
+                    {% for error in errors %}
+                        <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        {% endwith %}
+    </div>
+    <div class="form-row my-2">
+        {{ form.password.label }} {{ form.password(size=25, class='new-value') }}
+        {% with errors = form.password.errors %}
+            {% if errors %}
+                <ul class="errors">
+                    {% for error in errors %}
+                        <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        {% endwith %}
+    </div>
+    <div class="form-row my-3">
+        {{ form.submit(class='btn btn-primary') }}
+    </div>
+    {% if error %}
+    <h2>{{ error }}</h2>
+    {% endif %}
+</form>
+
+{% endblock %}

@@ -1,0 +1,20 @@
+INSTALL VENV
+============
+python -m venv myenv
+. venv/bin/activate
+
+ACTIVATE VENV
+=============
+1. cd to the root of my project
+2. . venv/bin/activate (don't forget the dot . )
+
+RUN APP
+=======
+3. if needed : export FLASK_APP=app.py
+4. flask run
+
+
+others
+to update requirement.txt : pip freeze > requirements.txt
+to install packages from .txt : pip install -r requirements.txt
+

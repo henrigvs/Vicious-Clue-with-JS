@@ -1,0 +1,61 @@
+{% extends "main.html" %}
+
+{% block body %}
+<h1>Riddles List</h1>
+<h2 style="margin-bottom: 25px">______________________________</h2>
+    <table class="center-aligned">
+        <thead>
+            <tr>
+                {% if session['userRole'] == "admin" %}
+                    <th>Owner</th>
+                {% endif %}
+                <th>Riddle</th>
+                <th>Solution</th>
+                <th>Clue</th>
+                <th>Difficulty</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for riddle in riddles %}
+                <tr>
+                    {% if session['userRole'] == "admin" %}
+                        <td><a href="{{ url_for('UserManagement.userDetails', playerId=riddle.ownerId) }}">{{ riddle.ownerId }}</a></td>
+                    {% endif %}
+                    <td>{{ riddle.description }}</td>
+                    <td><button id="sweetalert" class="btn-solution" solution="{{ riddle.solution}}">show solution</button></td>
+                    <td><button id="sweetalert" class="btn-list" clue="{{ riddle.clue }}">show clue</button></td>
+                    <td>{{ riddle.difficulty }}</td>
+                    <td>
+                        <button class="btn-modify" onclick="location.href='/edit/{{ riddle.riddleId }}'">Edit</button>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+<h2>______________________________</h2>
+{% endblock %}
+
+{% block footer %}
+    <div class="pagination">
+        {% if currentPage > 1 %}
+            <a href="{{ url_for('list.getList', page=currentPage-1) }}">&laquo; Previous</a>
+        {% endif %}
+        {% for page in range(1, totalPages+1) %}
+            {% if page == currentPage %}
+                <span>{{ page }}</span>
+            {% else %}
+                <a href="{{ url_for('list.getList', page=page) }}">{{ page }}</a>
+            {% endif %}
+        {% endfor %}
+        {% if currentPage < totalPages %}
+            <a href="{{ url_for('list.getList', page=currentPage+1) }}">Next &raquo;</a>
+        {% endif %}
+    </div>
+{% endblock %}
+
+
+
+
+
+
+

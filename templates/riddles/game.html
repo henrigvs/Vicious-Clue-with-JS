@@ -1,0 +1,23 @@
+{% extends "main.html" %}
+
+{% block body %}
+  <h1>Riddle n° {{ currentRiddle }}</h1>
+  <div class="container-game-title">
+    <h2 id="riddle-description">{{ riddle.description }}</h2>
+    {% if notCorrect == True %}
+    <h3 id="not-correct">The answer isn't correct, try again</h3>
+    {% endif %}
+  </div>
+  <div>
+    <form autocomplete="off" class="answer-form" method="POST">
+      <input class="answer-input" type="text" id="answer" name="answer" placeholder="Your answer"/>
+      <button class="btn" id="check-answer-button" type="submit" value="answer">Check Answer</button>
+    </form>
+
+  </div>
+  <div>
+    <button id="sweetalert" class="btn" clue="{{ riddle.clue }}">Get an hint</button>
+  </div>
+
+
+{% endblock %}
