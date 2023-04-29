@@ -2,7 +2,7 @@ import requests
 from flask import Blueprint, render_template
 from werkzeug.security import generate_password_hash
 
-from src.application.form.UserForm import editForm, loginForm
+from src.application.form.UserForm import editForm
 from src.application.users.ConnectUserInSession import ConnectUserInSession
 from resources.config.properties import HOST, PORT
 

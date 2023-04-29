@@ -4,7 +4,7 @@ import os
 from flask import Flask, render_template
 
 from database.database import init_db
-from resources.config.properties import HOST
+from resources.config.properties import PORT, HOST
 from src.application.riddles_handler.Create import createRiddleBP
 from src.application.users.EditUser import editUserBP
 from src.application.users.LoginUser import loginBP
@@ -26,7 +26,6 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 init_db(app)
 
 # If change port here, should modify into blueprints
-PORT = 5000
 app.secret_key = binascii.hexlify(os.urandom(24))
 
 app.register_blueprint(gameBP, url_prefix='/game')
@@ -49,6 +48,11 @@ def page_not_found(e):
 @app.route('/')
 def getIndex():
     return render_template('riddles/index.html')
+
+
+@app.route('/rules')
+def rules():
+    return render_template('rules/rules.html')
 
 
 if __name__ == '__main__':

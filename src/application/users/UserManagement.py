@@ -1,7 +1,6 @@
-from flask import request, render_template, Blueprint, session, redirect, url_for
-import requests
-
+from flask import render_template, Blueprint, session
 from resources.config.properties import HOST, PORT
+import requests
 
 UserManagementBP = Blueprint('UserManagement', __name__)
 

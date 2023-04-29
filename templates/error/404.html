@@ -2,6 +2,9 @@
 
 {% block body %}
     <h1>Error 404 - Not Found</h1>
-    <p>This page doesn't exist, we're building something awesome on this.</p>
+    <h2>This page doesn't exist, we're building something awesome on this.</h2>
+    {% if errorMessage is not none %}
+        <h2>Message: {{ errorMessage }}</h2>
+    {% endif %}
     <button class="play-button"><a href="/">Welcome page</a></button>
 {% endblock %}

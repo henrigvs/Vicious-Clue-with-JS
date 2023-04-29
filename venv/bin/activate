@@ -38,7 +38,7 @@ deactivate () {
 # unset irrelevant variables
 deactivate nondestructive
 
-VIRTUAL_ENV="/Users/henrigevenois/PycharmProjects/Vicious-Clue-with-JS/venv"
+VIRTUAL_ENV="/Users/henrigevenois/Dropbox/Henri/UNAMUR/uNamur_bloc_3/web/tp/tp1/web_c-comme-clue_TP1/venv"
 export VIRTUAL_ENV
 
 _OLD_VIRTUAL_PATH="$PATH"

@@ -40,6 +40,12 @@
     </form>
 
 {% else %}
+    <h1>
+      Credential for evaluation
+    </h1>
+    <h2>player credential: elio.tucci@unamur.be | password: WebTech2023-</h2>
+    <h2 style="margin-bottom: 30px">admin credential: henri.gevenois@student.unamur.be | password: Unamur2023-</h2>
+
     <form action="{{ url_for('login.loginUser') }}" method="POST" style="display: flex; flex-direction: column">
         {{ form.csrf_token }}
         <div class="form-row my-2">

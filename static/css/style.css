@@ -53,6 +53,10 @@ header {
 }
 
 .menu-list-of-enigma{
+  margin-right: 20px;
+}
+
+.menu-rules{
   margin-right: 30px;
 }
 
@@ -227,13 +231,14 @@ h1{
 }
 
 .new-value{
-  text-align: center;
-  border-radius: 0.6em;
-  padding: 5px 0 5px 0;
-  border: 2px solid blanchedalmond;
-  background-color: transparent;
-  color: blanchedalmond;
-  width: 600px;
+  text-align: center !important;
+  border-radius: 0.6em !important;
+  padding: 5px 0 5px 0 !important;
+  border: 2px solid blanchedalmond !important;
+  background-color: transparent !important;
+  color: blanchedalmond !important;
+  height: 40px !important;
+  width: 600px !important;
 }
 
 .new-value-difficulty{
@@ -439,4 +444,22 @@ input[type="password"]{
     border-radius: 5px;
     font-size: 14px;
     list-style-type: none;
+}
+
+.next-previous-links{
+  display: flex;
+  justify-content: space-between;
+  position: fixed;
+  left: 20%;
+  right: 21%;
+  top: 50%;
+  transform: translateY(-50%);
+}
+.next-previous-links a{
+  text-decoration: none;
+  color: blanchedalmond;
+}
+
+.ownerId{
+  color: blanchedalmond;
 }

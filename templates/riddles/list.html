@@ -19,7 +19,7 @@
             {% for riddle in riddles %}
                 <tr>
                     {% if session['userRole'] == "admin" %}
-                        <td><a href="{{ url_for('UserManagement.userDetails', playerId=riddle.ownerId) }}">{{ riddle.ownerId }}</a></td>
+                        <td><a class="ownerId" href="{{ url_for('UserManagement.userDetails', playerId=riddle.ownerId) }}">{{ riddle.ownerId }}</a></td>
                     {% endif %}
                     <td>{{ riddle.description }}</td>
                     <td><button id="sweetalert" class="btn-solution" solution="{{ riddle.solution}}">show solution</button></td>

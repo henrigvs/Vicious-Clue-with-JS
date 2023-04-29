@@ -11,13 +11,14 @@
   <body>
     <header>
         <div class="logo">
-          <a class="logo" href="/"><img src="{{ url_for('static', filename='img/logo2.png') }}" alt="Logo"></a>
+          <a class="logo" href="/"><img src="{{ url_for('static', filename='img/logo3.png') }}" alt="Logo"></a>
         </div>
         <div class="menu">
           <ul>
             <li class="menu-welcome"><a href="/">Welcome</a></li>
             <li class="menu-play"><a href="/game">Play</a></li>
             <li class="menu-list-of-enigma"><a href="/list">Riddles</a></li>
+            <li class="menu-rules"><a href="{{ url_for('rules') }}">Rules</a></li>
           </ul>
           <div class="login">
             <a href="{{ url_for('login.loginUser') }}">
@@ -30,7 +31,7 @@
           </div>
         </div>
       </header>
-
+x
     <main>
       {% block body %}
       {% endblock %}

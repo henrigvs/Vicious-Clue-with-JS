@@ -1,7 +1,6 @@
 import requests
 from flask import Blueprint, render_template
 from werkzeug.security import generate_password_hash
-
 from src.application.form.UserForm import signUpForm
 from resources.config.properties import HOST, PORT
 

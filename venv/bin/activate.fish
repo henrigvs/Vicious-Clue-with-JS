@@ -33,7 +33,7 @@ end
 # Unset irrelevant variables.
 deactivate nondestructive
 
-set -gx VIRTUAL_ENV "/Users/henrigevenois/PycharmProjects/Vicious-Clue-with-JS/venv"
+set -gx VIRTUAL_ENV "/Users/henrigevenois/Dropbox/Henri/UNAMUR/uNamur_bloc_3/web/tp/tp1/web_c-comme-clue_TP1/venv"
 
 set -gx _OLD_VIRTUAL_PATH $PATH
 set -gx PATH "$VIRTUAL_ENV/bin" $PATH

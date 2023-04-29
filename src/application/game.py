@@ -1,4 +1,4 @@
-from flask import Blueprint, request, render_template, session
+from flask import Blueprint, request, render_template, session, redirect, url_for
 from resources.config.properties import HOST, PORT
 from src.application.static_methods import JSONToERiddles
 import requests
@@ -44,5 +44,7 @@ def game():
             return getNextRiddle(notCorrect=True)
 
     else:
+        if session.get('userIsConnected') is None:
+            return redirect(url_for('login.loginUser'))
         session['currentRiddle'] = riddles[pointer - 1]
         return getNextRiddle(notCorrect=False)

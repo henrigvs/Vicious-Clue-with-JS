@@ -1,4 +1,4 @@
-from flask import request, render_template, Blueprint, session, redirect, url_for
+from flask import render_template, Blueprint, session, redirect, url_for
 import requests
 
 from src.application.form.UserForm import loginForm
