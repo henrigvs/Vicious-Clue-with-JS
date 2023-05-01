@@ -1,4 +1,4 @@
-from database import db
+from resources.database import db
 from src.users.domain.Role import Role
 from src.users.domain.User import User
 
@@ -11,9 +11,10 @@ class UserModel(db.Model):
     email = db.Column(db.String(50))
     role = db.Column(db.String(10))
     isConnected = db.Column(db.Boolean)
+    bestScore = db.Column(db.Integer)
 
     def __init__(self, user_id: str, firstName: str, lastName: str, password: str, email: str, role: str,
-                 isConnected: bool):
+                 isConnected: bool, bestScore: int):
         self.user_id = user_id
         self.firstName = firstName
         self.lastName = lastName
@@ -21,6 +22,7 @@ class UserModel(db.Model):
         self.email = email
         self.role = role
         self.isConnected = isConnected
+        self.bestScore = bestScore
 
     def toRealUserObject(self):
         getRole = None
@@ -36,5 +38,6 @@ class UserModel(db.Model):
             password=self.password,
             email=self.email,
             role=getRole,
-            isConnected=self.isConnected
+            isConnected=self.isConnected,
+            bestScore=self.bestScore
         )

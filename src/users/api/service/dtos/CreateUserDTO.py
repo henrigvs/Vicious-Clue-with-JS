@@ -10,13 +10,4 @@ class CreateUserDTO:
         self.email = email
         self.role = role
         self.isConnected = isConnected
-
-    def __eq__(self, o):
-        if not isinstance(o, CreateUserDTO):
-            return False
-        return (self.firstName == o.firstName
-                and self.lastName == o.lastName
-                and self.password == o.password
-                and self.email == o.email
-                and self.role == o.role
-                and self.isConnected == o.isConnected)
+        self.bestScore = 0

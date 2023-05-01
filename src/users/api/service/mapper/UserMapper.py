@@ -15,7 +15,8 @@ class UserMapper:
                            user.password,
                            user.email,
                            user.role,
-                           user.isConnected)
+                           user.isConnected,
+                           user.bestScore)
 
     @staticmethod
     def toEntity(createUserDTO) -> User:

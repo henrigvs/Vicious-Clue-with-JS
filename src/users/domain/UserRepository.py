@@ -2,7 +2,7 @@ from typing import List, Optional
 
 from werkzeug.security import check_password_hash
 
-from database import db
+from resources.database import db
 from src.users.domain.User import User
 from src.users.domain.UserModel import UserModel
 
@@ -21,8 +21,9 @@ class UserRepository:
             lastName=user.lastName,
             password=user.password,
             email=user.email,
-            role=user.role.label,           # Important to add label !
-            isConnected=user.isConnected
+            role=user.role.label,  # Important to add label !
+            isConnected=user.isConnected,
+            bestScore=user.bestScore
         )
         db.session.add(userModel)
         db.session.commit()
@@ -42,7 +43,8 @@ class UserRepository:
                 UserModel.password: user.password,
                 UserModel.email: user.email,
                 UserModel.role: user.role.label,
-                UserModel.isConnected: user.isConnected
+                UserModel.isConnected: user.isConnected,
+                UserModel.bestScore: user.bestScore
             }
         )
         db.session.commit()
@@ -103,3 +105,12 @@ class UserRepository:
             db.session.commit()
             return user.toRealUserObject()
 
+    @staticmethod
+    def setBestScore(userId: str, bestScore: int):
+        user = UserRepository.getUserByUserId(userId)
+        if user is None:
+            return None
+        else:
+            db.session.query(UserModel).filter(UserModel.user_id == userId).update({UserModel.bestScore: bestScore})
+            db.session.commit()
+            return UserRepository.getUserByUserId(userId)

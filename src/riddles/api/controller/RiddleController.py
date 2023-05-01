@@ -1,9 +1,10 @@
 from flask import jsonify, request, Blueprint
 
 from src.riddles.api.service.RiddleService import RiddleService
-from src.riddles.api.service.dtos.CreateRiddleDTO import CreateRiddleDTO
-from src.riddles.api.service.dtos.RiddleDTO import RiddleDTO
+from src.riddles.api.service.dtos.riddle.CreateRiddleDTO import CreateRiddleDTO
+from src.riddles.domain.Category import Category
 from src.riddles.domain.RiddleRepository import RiddleRepository
+from src.riddles.domain.clues.Clue import Clue
 
 # Blueprint
 riddleBP = Blueprint('riddles', __name__)
@@ -17,27 +18,88 @@ riddleService = RiddleService(riddleRepository)
 @riddleBP.route('/addRiddle', methods=['POST'])
 def addRiddle():
     data = request.get_json()
-    createRiddleDTO = CreateRiddleDTO(data['description'], data['solution'], data['clue'], data['difficulty'],
-                                      data['ownerId'])
-    riddleDTO = riddleService.addRiddle(createRiddleDTO)
-    return _jsonifyRiddles(riddleDTO, 201, "add riddle failed", 400)
+    # Validate category
+    if data['category'] not in [category.label for category in Category]:
+        return jsonify({
+            "message": "Creation failed",
+            "error": "Invalid category"
+        }), 400
+    # Validate difficulty
+    elif data['difficulty'] < 0 or data['difficulty'] > 5:
+        return jsonify({
+            "message": "Creation failed",
+            "error": "Invalid difficulty"
+        }), 400
+    # Return created object
+    else:
+        # Create an array of Clue objects
+        clues = []
+        for clue in data['clues']:
+            newClue = Clue(clue['description'])
+            clues.append(newClue)
+
+        createRiddleDTO = CreateRiddleDTO(
+            data['description'],
+            data['solution'],
+            clues,
+            data['difficulty'],
+            data['category'],
+            data['ownerId']
+        )
+
+        riddleDTO = riddleService.addRiddle(createRiddleDTO)
+        return jsonify(riddleDTO.to_dict()), 201
 
 
 # DELETE
 @riddleBP.route('/delete/<riddleId>', methods=['DELETE'])
 def deleteRiddle(riddleId):
     riddleDTO = riddleService.deleteRiddle(riddleId)
-    return _jsonifyRiddles(riddleDTO, 200, "riddleId unknown", 404)
+    if riddleDTO is None:
+        return jsonify({
+            "message": "failed",
+            "error": "Invalid riddle ID"
+        }), 404
+    return jsonify(riddleDTO.to_dict()), 200
 
 
 # PUT
 @riddleBP.route('/edit/<riddleId>', methods=['PUT'])
 def editRiddle(riddleId):
     data = request.get_json()
-    createRiddleDTO = CreateRiddleDTO(data['description'], data['solution'], data['clue'], data['difficulty'],
-                                      data['ownerId'])
-    riddleDTO = riddleService.editRiddle(createRiddleDTO, riddleId)
-    return _jsonifyRiddles(riddleDTO, 200, "riddleId unknown", 404)
+    # Validate category
+    if data['category'] not in [category.label for category in Category]:
+        return jsonify(
+            {
+                "message": "Creation failed",
+                "error": "Invalid category"
+            }
+        ), 400
+    # Validate difficulty
+    elif data['difficulty'] < 0 or data['difficulty'] > 5:
+        return jsonify(
+            {
+                "message": "Creation failed",
+                "error": "Invalid difficulty"
+            }
+        ), 400
+    else:
+        # Create an array of Clue objects
+        clues = []
+        for clue in data['clues']:
+            newClue = Clue(clue['description'])
+            clues.append(newClue)
+
+        createRiddleDTO = CreateRiddleDTO(
+            data['description'],
+            data['solution'],
+            clues,
+            data['difficulty'],
+            data['category'],
+            data['ownerId']
+        )
+        riddleDTO = riddleService.editRiddle(createRiddleDTO, riddleId)
+        return jsonify(riddleDTO.to_dict()), 200
 
 
 # GET
@@ -50,17 +112,25 @@ def getAllRiddles():
 @riddleBP.route('/riddle/<riddleId>', methods=['GET'])
 def getRiddleById(riddleId):
     riddleDTO = riddleService.getRiddleByID(riddleId)
-    return _jsonifyRiddles(riddleDTO, 200, "riddleId unknown", 404)
+    if riddleDTO is None:
+        return jsonify(
+            {
+                "message": "failed",
+                "error": "Invalid riddle ID"
+            }
+        ), 404
+    return jsonify(riddleDTO.to_dict()), 200
 
 
-@riddleBP.route('/getAllRiddlesOf/<ownerId>', methods=['GET'])
-def getAllRiddlesOfAnOwner(ownerId):
-    riddleDTOs = riddleService.getAllRiddlesOfAnOwner(ownerId)
-    return jsonify([riddleDTO.to_dict() for riddleDTO in riddleDTOs])
-
-
-def _jsonifyRiddles(riddleDTO: RiddleDTO, code_ok: int, message_ko, code_ko: int):
-    if riddleDTO is not None:
-        return jsonify(riddleDTO.to_dict()), code_ok
+@riddleBP.route('/getAllRiddlesOf/<userId>', methods=['GET'])
+def getAllRiddlesOfAnOwner(userId):
+    riddleDTOs = riddleService.getAllRiddlesOfAnOwner(userId)
+    if riddleDTOs is None:
+        return jsonify(
+            {
+                "message": "fetch failed",
+                "error": "Invalid user ID"
+            }
+        )
     else:
-        return jsonify({'success': False, 'message': message_ko}), code_ko
+        return jsonify([riddleDTO.to_dict() for riddleDTO in riddleDTOs])

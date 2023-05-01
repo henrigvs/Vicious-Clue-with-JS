@@ -60,6 +60,5 @@ def loginUser():
 def logoutUser():
     userId = session.get('userId')
     ConnectUserInSession.disconnectUser()
-    jsonUserId = {"userId": userId}
-    requests.put(f"http://{HOST}:{PORT}/users/logout", json=jsonUserId)
+    requests.put(f"http://{HOST}:{PORT}/users/{userId}/logout")
     return redirect(url_for('login.loginUser'))

@@ -64,24 +64,28 @@ def connectAnUserByEmailAndPassword():
     data = request.get_json()
     email, password = data['email'], data['password']
     userDTO = userService.getUserByEmailAndByPassword(email, password)
-    # Call the connect method of
     if userDTO is not None:
         userDTO = userService.connectUser(userDTO.userId)
     return _jsonifyUserDTO(userDTO, 200, "Wrong email or password", 400)
 
 
-@userBP.route('/logout', methods=['PUT'])
-def disconnectAnUserByUserId():
-    userId = request.get_json()['userId']
-    userDTO = userService.getUserByUserId(userId)
+@userBP.route('/<user_id>/logout', methods=['PUT'])
+def disconnectAnUserByUserId(user_id):
+    userDTO = userService.getUserByUserId(user_id)
     updatedUserDTO = userService.disconnectUser(userDTO.userId)
     return _jsonifyUserDTO(updatedUserDTO, 200, "userId unknown", 404)
 
 
-@userBP.route('/delete/<userId>', methods=['DELETE'])
-def deleteUser():
-    userId = request.get_json()['userId']
-    userDTO = userService.deleteUserByUserId(userId)
+@userBP.route('/delete/<user_id>', methods=['DELETE'])
+def deleteUser(user_id):
+    userDTO = userService.deleteUserByUserId(user_id)
+    return _jsonifyUserDTO(userDTO, 200, "userId unknown", 404)
+
+
+@userBP.route('/setBestScore/<user_id>', methods=['PUT'])
+def setBestScore(user_id):
+    bestScore = request.get_json()['bestScore']
+    userDTO = userService.setBestScore(user_id, bestScore)
     return _jsonifyUserDTO(userDTO, 200, "userId unknown", 404)
 
 

@@ -49,3 +49,7 @@ class UserService:
     def deleteUserByUserId(self, userId: str) -> UserDTO:
         deletedUser = self.userRepository.deleteUserByUserId(userId)
         return self.userMapper.toDTO(deletedUser)
+
+    def setBestScore(self, userId: str, bestScore: str):
+        user = self.userRepository.setBestScore(userId, bestScore)
+        return self.userMapper.toDTO(user)

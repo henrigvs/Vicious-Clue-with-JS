@@ -3,14 +3,14 @@ import os
 
 from flask import Flask, render_template
 
-from database.database import init_db
+from resources.database.database import init_db
 from resources.config.properties import PORT, HOST
+from src.application.list import listBP
 from src.application.riddles_handler.Create import createRiddleBP
 from src.application.users.EditUser import editUserBP
 from src.application.users.LoginUser import loginBP
 from src.application.riddles_handler.Edit import editBP
 from src.application.game import gameBP
-from src.application.List import listBP
 from src.application.users.UserManagement import UserManagementBP
 from src.riddles.api.controller.RiddleController import riddleBP
 from src.users.api.controller.UserController import userBP
@@ -21,7 +21,7 @@ app.config['TEMPLATES_AUTO_RELOAD'] = True
 basedir = os.path.abspath(os.path.dirname(__file__))
 
 # Configure and init DB
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'database', 'vicious_clue_database.db')
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'resources/database', 'vicious_clue_database.db')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 init_db(app)
 

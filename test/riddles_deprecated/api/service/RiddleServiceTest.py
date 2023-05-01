@@ -1,8 +1,8 @@
 import unittest
 
 from src.riddles.api.service.RiddleService import RiddleService
-from src.riddles.api.service.dtos.CreateRiddleDTO import CreateRiddleDTO
-from src.riddles.api.service.dtos.RiddleDTO import RiddleDTO
+from src.riddles.api.service.dtos.riddle.CreateRiddleDTO import CreateRiddleDTO
+from src.riddles.api.service.dtos.riddle.RiddleDTO import RiddleDTO
 from src.riddles.domain.Riddle import Riddle
 from src.riddles.domain.RiddleRepository import RiddleRepository
 from src.riddles.api.service.mapper.RiddleMapper import RiddleMapper
