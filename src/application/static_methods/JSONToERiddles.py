@@ -6,7 +6,7 @@ def convertJSONToERiddlesArray(jsonData) -> []:
         riddle = {
             "riddleId": data["riddleId"],
             "description": data["description"],
-            "clue": data["clue"],
+            "clues": data["clues"],
             "solution": data["solution"],
             "difficulty": data["difficulty"],
             "ownerId": data["ownerId"]

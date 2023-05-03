@@ -1,20 +1,20 @@
-import binascii
 import os
 
 from flask import Flask, render_template
 
 from resources.database.database import init_db
 from resources.config.properties import PORT, HOST
-from src.application.list import listBP
-from src.application.riddles_handler.Create import createRiddleBP
-from src.application.users.EditUser import editUserBP
-from src.application.users.LoginUser import loginBP
-from src.application.riddles_handler.Edit import editBP
-from src.application.game import gameBP
-from src.application.users.UserManagement import UserManagementBP
-from src.riddles.api.controller.RiddleController import riddleBP
-from src.users.api.controller.UserController import userBP
-from src.application.users.SignUpUser import signUpBP
+from src.application.component.riddles.Create import createRiddleBP
+from src.application.component.riddles.Edit import editBP
+from src.application.component.riddles.list import listBP
+
+from src.application.component.game.game import gameBP
+from src.application.component.users.EditUser import editUserBP
+from src.application.component.users.LoginUser import loginBP
+from src.application.component.users.SignUpUser import signUpBP
+from src.application.component.users.UserManagement import UserManagementBP
+from src.backend.riddles.api.controller.RiddleController import riddleBP
+from src.backend.users.api.controller.UserController import userBP
 
 app = Flask(__name__)
 app.config['TEMPLATES_AUTO_RELOAD'] = True
@@ -26,7 +26,7 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 init_db(app)
 
 # If change port here, should modify into blueprints
-app.secret_key = binascii.hexlify(os.urandom(24))
+app.secret_key = "secretkey" # binascii.hexlify(os.urandom(24))
 
 app.register_blueprint(gameBP, url_prefix='/game')
 app.register_blueprint(riddleBP, url_prefix='/riddles')

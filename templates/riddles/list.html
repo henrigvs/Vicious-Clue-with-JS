@@ -11,7 +11,6 @@
                 {% endif %}
                 <th>Riddle</th>
                 <th>Solution</th>
-                <th>Clue</th>
                 <th>Difficulty</th>
             </tr>
         </thead>
@@ -22,17 +21,29 @@
                         <td><a class="ownerId" href="{{ url_for('UserManagement.userDetails', playerId=riddle.ownerId) }}">{{ riddle.ownerId }}</a></td>
                     {% endif %}
                     <td>{{ riddle.description }}</td>
-                    <td><button id="sweetalert" class="btn-solution" solution="{{ riddle.solution}}">show solution</button></td>
-                    <td><button id="sweetalert" class="btn-list" clue="{{ riddle.clue }}">show clue</button></td>
-                    <td>{{ riddle.difficulty }}</td>
+                    <td><button id="sweetalert" class="btn-solution" solution="{{ riddle.solution }}">show solution</button></td>
+                    <td class="col-difficulty">
+                        <button class="btn-difficulty" data-action="decrease" value="{{ riddle.riddleId }}">-</button>
+                        <span id="difficulty-{{ riddle.riddleId }}">{{ riddle.difficulty }}</span>
+                        <button class="btn-difficulty" data-action="increase" value="{{ riddle.riddleId }}">+</button>
                     <td>
-                        <button class="btn-modify" onclick="location.href='/edit/{{ riddle.riddleId }}'">Edit</button>
+                        <form action="{{ url_for('edit.editRiddle', riddleId=riddle.riddleId) }}" method="POST">
+                            <button class="btn-modify" type="submit">Edit</button>
+                        </form>
                     </td>
+                    {% if session['userRole'] == "admin" %}
+                        <td>
+                            <button class="btn-delete" data-remaining-riddle="{{ remainingRiddle }}" value="{{ riddle.riddleId }}">Delete</button>
+
+                        </td>
+                    {% endif %}
+
                 </tr>
             {% endfor %}
         </tbody>
     </table>
 <h2>______________________________</h2>
+<button class="play-button"><a href="{{ url_for('createRiddle.createRiddle') }}">Create riddle</a></button>
 {% endblock %}
 
 {% block footer %}
@@ -53,7 +64,12 @@
     </div>
 {% endblock %}
 
-
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/list.js') }}"></script>
+<script>
+    const emptyListURL = "{{ url_for('list.emptyList') }}";
+</script>
+{% endblock %}
 
 
 

@@ -1,11 +1,6 @@
 {% extends "main.html" %}
 
 {% block body %}
-    <h1>Edit Riddle</h1>
-    {% if error_message %}
-        <p>{{ error_message }}</p>
-    {% endif %}
-
     <!-- Previous and next riddle navigation links -->
     <div class="next-previous-links">
         {% if prevRiddleId %}
@@ -19,33 +14,90 @@
         {% endif %}
     </div>
 
+    <h1>Edit a Riddle</h1>
 
-    <!-- List displaying-->
-    <form action="{{ url_for('edit.editRiddle', riddleId=riddle.riddleId) }}" method="POST" style="display: flex; flex-direction: column;">
-        <p class="attribute">Riddle</p>
-        <input class="new-value" type="text" id="description" name="description" value="{{ riddle.description }}" required>
-
-        <p class="attribute">Solution</p>
-        <input class="new-value" type="text" id="solution" name="solution" value="{{ riddle.solution }}" required>
-
-        <p class="attribute">Clue</p>
-        <input class="new-value" type="text" id="clue" name="clue" value="{{ riddle.clue }}" required>
-
-        <p class="attribute">Difficulty Level</p>
-        <div class="custom-number-input">
-            <button class="btn-edit left" type="button" onclick="decrement()">-</button>
-            <input class="new-value-difficulty" type="number" id="difficulty" name="difficulty" min="0" max="5" value="{{ riddle.difficulty }}" required>
-            <button class="btn-edit right" type="button" onclick="increment()">+</button>
+    <form method="POST" action="/edit/{{ riddle.riddleId }}" novalidate id="createRiddleForm">
+        {{ form.csrf_token }}
+        <div class="form-row my-2">
+            {{ form.description.label }} {{ form.description(class='new-value') }}
+            {% with errors = form.description.errors %}
+                {% if errors %}
+                    <ul class="errors">
+                        {% for error in errors %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            {% endwith %}
+        </div>
+        <div class="form-row my-2">
+            {{ form.solution.label }} {{ form.solution(size=30, class='new-value') }}
+            {% with errors = form.solution.errors %}
+                {% if errors %}
+                    <ul class="errors">
+                        {% for error in errors %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            {% endwith %}
         </div>
 
-        <div style="display: flex; justify-content: center; margin-top: 1rem;">
-            <button class="btn-confirmation-edit" type="submit">Edit</button>
+        <div class="form-row my-2">
+            {{ form.category.label }} {{ form.category(class='new-value') }}
+            {% with errors = form.category.errors %}
+                {% if errors %}
+                    <ul class="errors">
+                        {% for error in errors %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            {% endwith %}
+        </div>
+
+        <div class="form-row my-2">
+            <div class="clue-container">
+                <div class="clue-wrapper" clue-number="1">
+                    <label for="clue-1">Clue</label>
+                    <input type="text" id="clue-1" size="30" class="new-value">
+                </div>
+            </div>
+
+            <div class="buttons-container">
+                <button type="button" id="addClueButton" class="btn-clue add">Add clue</button>
+                <button type="button" id="removeClueButton" class="btn-clue remove">Remove clue</button>
+            </div>
+        </div>
+
+        <div class="form-row my-2">
+            {{ form.difficulty.label }}
+            <div class="custom-number-input">
+                <button type="button" id="decreaseDifficulty" class="btn-edit left">-</button>
+                {{ form.difficulty(id='difficultyInput', class='new-value-difficulty') }}
+                <button type="button" id="increaseDifficulty" class="btn-edit right">+</button>
+            </div>
+            {% with errors = form.difficulty.errors %}
+                {% if errors %}
+                    <ul class="errors">
+                        {% for error in errors %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            {% endwith %}
+        </div>
+
+        <!-- Add the hidden input field for the clues -->
+        {{ form.clues(class='hidden-clues') }}
+        <div class="form-row my-3">
+            {{ form.submit(class='btn btn-primary', onclick="submitRiddle()") }}
         </div>
     </form>
-        <div>
-        <form action="{{ url_for('edit.deleteRiddle', riddleId=riddle.riddleId) }}" method="POST">
 
-            <button class="btn-confirmation-delete" type="submit">Delete</button>
-        </form>
-        </div>
+{% endblock %}
+
+{% block scripts %}
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="{{ url_for('static', filename='js/create.js') }}"></script>
 {% endblock %}

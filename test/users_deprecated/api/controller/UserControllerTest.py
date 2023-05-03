@@ -1,7 +1,7 @@
 import pytest
 from flask import Flask
 
-from src.users.api.controller.UserController import userBP
+from src.backend.users.api.controller.UserController import userBP
 
 
 @pytest.fixture

@@ -1,6 +1,6 @@
 import unittest
-from src.users.domain.User import User
-from src.users.domain.UserRepository import UserRepository
+from src.backend.users.domain import User
+from src.backend.users.domain.UserRepository import UserRepository
 
 
 class TestUserRepository(unittest.TestCase):

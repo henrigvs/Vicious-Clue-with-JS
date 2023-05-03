@@ -5,6 +5,6 @@
 <h1>You've not created riddles yet</h1>
 <h2>Begin now !</h2>
 
-<button class="play-button"><a href="#">Create riddle</a></button>
+<button class="play-button"><a href="{{ url_for('createRiddle.createRiddle') }}">Create riddle</a></button>
 
 {% endblock %}

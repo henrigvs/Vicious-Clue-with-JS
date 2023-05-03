@@ -1,10 +1,35 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends "main.html" %}
+{% block body %}
 
-</body>
-</html>
+<h1 style="margin-bottom: 25px">Riddle created</h1>
+<h2 style="margin-bottom: 15px">___________________________</h2>
+<table>
+        <tbody>
+            <tr>
+                <th>Riddle ID</th>
+                <td>{{ riddle.riddleId }}</td>
+            </tr>
+            <tr>
+                <th>Riddle</th>
+                <td>{{ riddle.description }}</td>
+            </tr>
+            <tr>
+                <th>Solution</th>
+                <td>{{ riddle.solution }}</td>
+            </tr>
+            {% for clue in riddle['clues']%}
+            <tr>
+                <th>Clue</th>
+                <td>{{ clue['clueDescription'] }}</td>
+            </tr>
+            {% endfor %}
+
+        </tbody>
+    </table>
+    <h2>___________________________</h2>
+
+<form action="{{ url_for('edit.editRiddle', riddleId=riddle.riddleId) }}" method="GET" style="display: flex; flex-direction: column">
+        <button class="btn-confirmation-edit" type="submit">Edit riddle</button>
+</form>
+
+{% endblock %}

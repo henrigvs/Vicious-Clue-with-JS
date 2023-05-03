@@ -1,7 +1,7 @@
 import pytest
 from flask import Flask
 
-from src.riddles.api.controller.RiddleController import riddleBP
+from src.backend.riddles.api.controller.RiddleController import riddleBP
 
 
 @pytest.fixture

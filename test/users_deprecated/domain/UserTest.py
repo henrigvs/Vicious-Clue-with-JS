@@ -1,6 +1,6 @@
 import unittest
 import uuid
-from src.users.domain.User import User
+from src.backend.users.domain import User
 
 
 class TestUser(unittest.TestCase):

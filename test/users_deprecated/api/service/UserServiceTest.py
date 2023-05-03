@@ -1,9 +1,9 @@
 import unittest
-from src.users.api.service.UserService import UserService
-from src.users.api.service.dtos.CreateUserDTO import CreateUserDTO
-from src.users.api.service.dtos.UserDTO import UserDTO
-from src.users.api.service.mapper.UserMapper import UserMapper
-from src.users.domain.UserRepository import UserRepository
+from src.backend.users.api.service.UserService import UserService
+from src.backend.users.api.service import CreateUserDTO
+from src.backend.users.api.service.dtos.UserDTO import UserDTO
+from src.backend.users.api.service.mapper.UserMapper import UserMapper
+from src.backend.users.domain.UserRepository import UserRepository
 
 
 class TestUserService(unittest.TestCase):

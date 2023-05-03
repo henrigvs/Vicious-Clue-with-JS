@@ -217,6 +217,34 @@ h1{
   color: blanchedalmond;
 }
 
+.btn-delete{
+  box-sizing: border-box;
+  appearance: none;
+  background-color: blanchedalmond;
+  border: 2px solid blanchedalmond;
+  border-radius: 0.6em;
+  cursor: pointer;
+  display: flex;
+  align-self: center;
+  font-size: 0.6rem;
+  font-weight: 400;
+  line-height: 1;
+  margin: 20px;
+  padding: 1.2em 2.8em;
+  text-decoration: none;
+  text-align: center;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: #5f6774;
+}
+
+.btn-delete:hover{
+  background: linear-gradient(45deg, blanchedalmond 0, transparent 100%);
+  transition: background 300ms ease-in-out;
+  color: blanchedalmond;
+}
+
+
 .answer-form{
   margin-top: 20px;
 }
@@ -241,14 +269,14 @@ h1{
   width: 600px !important;
 }
 
-.new-value-difficulty{
-  text-align: center;
-  border-radius: 0.6em;
-  padding: 5px 0 5px 0;
-  border: 2px solid blanchedalmond;
-  background-color: transparent;
-  color: blanchedalmond;
-  width: 100px;
+.new-value-difficulty {
+    text-align: center;
+    border-radius: 0.6em;
+    padding: 5px 0 5px 0;
+    border: 2px solid blanchedalmond;
+    background-color: transparent;
+    color: blanchedalmond;
+    width: 50px;
 }
 
 .custom-number-input {
@@ -339,6 +367,31 @@ input[type="number"] {
   color: blanchedalmond;
 }
 
+.btn-difficulty{
+
+  background-color: blanchedalmond;
+  border: 2px solid blanchedalmond;
+  border-radius: 1em;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: 400;
+  width: 25px;
+  margin: 20px;
+  padding: 5px;
+  color: #5f6774
+}
+
+.col-difficulty{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.col-difficulty span{
+  margin: 0;
+  padding: 0;
+}
+
 /* Custom styles for the 'Cool' button */
 .swal2-confirm.button-cool {
   box-sizing: border-box;
@@ -420,9 +473,49 @@ footer {
   margin-bottom: 15px;
 }
 
+.clue-container{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.clue-wrapper{
+  display: flex;
+  flex-direction: column;
+  margin-top: 10px;
+}
+
+.button-wrapper{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 20px;
+  width: 100%;
+}
+
+.buttons-container{
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 20px;
+}
+
+.btn-clue{
+  background-color: blanchedalmond;
+  border: 2px solid blanchedalmond;
+  border-radius: 0.8em;
+  cursor: pointer;
+  padding: 10px;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: #5f6774;
+}
+
 label{
   margin-bottom: 5px;
-  font-weight: bold;
+  font-weight: bold
 }
 
 input[type="text"],
