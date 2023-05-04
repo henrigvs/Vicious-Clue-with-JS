@@ -1,0 +1,23 @@
+{% extends "main.html" %}
+
+{% block body %}
+<h1>Welcome on Vicious Clue</h1>
+<h2>Demonstration</h2>
+<h3>Answer correctly at 3 riddles consecutively to win the demo game</h3>
+
+<button id="getRandomRiddle" class="btn">Get Random Riddle</button>
+
+<div id="riddleContainer" style="display:none;">
+    <p id="riddleDescription" style="margin: 15px 0 15px 0"></p>
+    <div id="clueButtons" style="margin-bottom: 15px"></div>
+    <input type="text" id="userAnswer">
+    <button id="submitAnswer">Verify</button>
+    <h2 id="correctAnswerCounter"></h2>
+</div>
+
+<p id="message"></p>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/game1.js') }}"></script>
+{% endblock %}

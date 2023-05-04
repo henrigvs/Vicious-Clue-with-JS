@@ -3,75 +3,53 @@
 {% block body %}
 <h1>Riddles List</h1>
 <h2 style="margin-bottom: 25px">______________________________</h2>
-    <table class="center-aligned">
-        <thead>
-            <tr>
-                {% if session['userRole'] == "admin" %}
-                    <th>Owner</th>
-                {% endif %}
-                <th>Riddle</th>
-                <th>Solution</th>
-                <th>Difficulty</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for riddle in riddles %}
-                <tr>
-                    {% if session['userRole'] == "admin" %}
-                        <td><a class="ownerId" href="{{ url_for('UserManagement.userDetails', playerId=riddle.ownerId) }}">{{ riddle.ownerId }}</a></td>
-                    {% endif %}
-                    <td>{{ riddle.description }}</td>
-                    <td><button id="sweetalert" class="btn-solution" solution="{{ riddle.solution }}">show solution</button></td>
-                    <td class="col-difficulty">
-                        <button class="btn-difficulty" data-action="decrease" value="{{ riddle.riddleId }}">-</button>
-                        <span id="difficulty-{{ riddle.riddleId }}">{{ riddle.difficulty }}</span>
-                        <button class="btn-difficulty" data-action="increase" value="{{ riddle.riddleId }}">+</button>
-                    <td>
-                        <form action="{{ url_for('edit.editRiddle', riddleId=riddle.riddleId) }}" method="POST">
-                            <button class="btn-modify" type="submit">Edit</button>
-                        </form>
-                    </td>
-                    {% if session['userRole'] == "admin" %}
-                        <td>
-                            <button class="btn-delete" data-remaining-riddle="{{ remainingRiddle }}" value="{{ riddle.riddleId }}">Delete</button>
+<div class="filter-box">
+    <label for="category-filter">Filter by category</label>
+    <select id="category-filter" class="category-selector">
+        <option value="all">All</option>
+        <option value="Animal">Animal</option>
+        <option value="Difficult">Difficult</option>
+        <option value="Easy">Easy</option>
+        <option value="Food">Food</option>
+        <option value="Funny">Funny</option>
+        <option value="Kids">Kids</option>
+        <option value="Logic">Logic</option>
+        <option value="Tricky">Tricky</option>
+        <option value="What I am">What I am</option>
+        <option value="Who I am">Who I am</option>
+    </select>
+</div>
 
-                        </td>
-                    {% endif %}
-
-                </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+<table class="center-aligned">
+    <thead>
+    <tr>
+        {% if session['userRole'] == "admin" %}
+        <th>Owner</th>
+        {% endif %}
+        <th>Riddle</th>
+        <th>Solution</th>
+        <th>Difficulty</th>
+        <th>Category</th>
+    </tr>
+    </thead>
+    <tbody id="riddles-tbody">
+    </tbody>
+</table>
 <h2>______________________________</h2>
 <button class="play-button"><a href="{{ url_for('createRiddle.createRiddle') }}">Create riddle</a></button>
 {% endblock %}
 
 {% block footer %}
-    <div class="pagination">
-        {% if currentPage > 1 %}
-            <a href="{{ url_for('list.getList', page=currentPage-1) }}">&laquo; Previous</a>
-        {% endif %}
-        {% for page in range(1, totalPages+1) %}
-            {% if page == currentPage %}
-                <span>{{ page }}</span>
-            {% else %}
-                <a href="{{ url_for('list.getList', page=page) }}">{{ page }}</a>
-            {% endif %}
-        {% endfor %}
-        {% if currentPage < totalPages %}
-            <a href="{{ url_for('list.getList', page=currentPage+1) }}">Next &raquo;</a>
-        {% endif %}
-    </div>
+<div class="pagination"></div>
 {% endblock %}
+
 
 {% block scripts %}
 <script src="{{ url_for('static', filename='js/list.js') }}"></script>
 <script>
     const emptyListURL = "{{ url_for('list.emptyList') }}";
+    const userRole = "{{ session['userRole'] }}";
+    const riddlesPerPage = 5;
+    //displayRiddles();
 </script>
 {% endblock %}
-
-
-
-
-

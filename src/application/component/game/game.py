@@ -3,7 +3,6 @@ from resources.config.properties import HOST, PORT
 from src.application.static_methods import JSONToERiddles
 import requests
 
-
 gameBP = Blueprint('game', __name__)
 pointer = 1
 
@@ -48,3 +47,8 @@ def game():
             return redirect(url_for('login.loginUser'))
         session['currentRiddle'] = riddles[pointer - 1]
         return getNextRiddle(notCorrect=False)
+
+
+@gameBP.route('game1', methods=['GET'])
+def game1():
+    return render_template('riddles/game1.html')
