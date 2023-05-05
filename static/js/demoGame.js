@@ -1,45 +1,52 @@
-// Return the array of riddles
+// Helper Functions
 const getRiddlesArray = async () => {
-    const response = await fetch('/riddles/getAllRiddles');
+    const response = await fetch("/riddles/getAllRiddles");
     return await response.json();
 };
-getRiddlesArray().then(riddles => {
-    console.log(riddles);
-});
 
-// Return the exact number of riddles
-const getRiddleNumber = async () => {
-    const riddles = await getRiddlesArray();
-    return riddles.length;
-}
-getRiddleNumber().then(riddlesLength => {
-    console.log(riddlesLength);
-});
-
-// Pick a random number between 0 and riddles.length - 1
-const pickANumber = async () => {
-    const maxNumber = await getRiddleNumber() - 1;
+const pickANumber = (maxNumber) => {
     return Math.floor(Math.random() * (maxNumber + 1));
-}
-pickANumber().then(nb => {
-    console.log(nb);
-});
+};
 
-/* ------- Function handling the game ------- */
+const checkAnswer = (userAnswer, correctAnswer) => {
+    return userAnswer.trim().toLowerCase() === correctAnswer.trim().toLowerCase();
+};
+
+// Game Logic
 let correctAnswers = 0;
+let incorrectAnswers = -1;
+let lastRiddleId = null;
 
-// Get a random riddle
+const updateCounters = () => {
+    const correctAnswerCounter = document.getElementById("correctAnswerCounter");
+    const incorrectAnswerCounter = document.getElementById("incorrectAnswerCounter");
+
+    correctAnswerCounter.innerText = `Consecutive correct answers: ${correctAnswers}`;
+    incorrectAnswerCounter.innerText = `Consecutive incorrect answers or skipped riddles: ${incorrectAnswers}`;
+};
+
 const getRandomRiddle = async () => {
     const riddles = await getRiddlesArray();
-    const randomIndex = await pickANumber();
+
+    if (riddles.length === 0) {
+        return null;
+    } else if (riddles.length === 1) {
+        return riddles[0];
+    }
+
+    let randomIndex;
+
+    do {
+        randomIndex = pickANumber(riddles.length - 1);
+    } while (lastRiddleId === riddles[randomIndex]);
+
+    lastRiddleId = riddles[randomIndex];
     return riddles[randomIndex];
 };
 
-// Display the random riddle
 const displayRiddle = async (riddle) => {
-    // Description
     const riddleDescription = document.getElementById("riddleDescription");
-    riddleDescription.innerHTML = ""; // Clear the contents of the riddleDescription element
+    riddleDescription.innerHTML = "";
 
     const riddleTitle = document.createElement("h2");
     riddleTitle.innerText = "Riddle";
@@ -48,24 +55,22 @@ const displayRiddle = async (riddle) => {
     const riddleText = document.createTextNode(riddle.description);
     riddleDescription.appendChild(riddleText);
 
-
-    // Clues
     const clueButtons = document.getElementById("clueButtons");
     clueButtons.innerHTML = "";
 
     riddle.clues.forEach((clue, index) => {
         const clueButton = document.createElement("button");
         clueButton.innerText = `Show Clue ${index + 1}`;
-        clueButton.className = 'btn-clue-game';
+        clueButton.className = "btn-clue-game";
         clueButton.onclick = () => {
             Swal.fire({
                 customClass: {
-                    popup: 'popup'
+                    popup: "popup",
                 },
-                title: 'Clue',
+                title: "Clue",
                 text: clue.clueDescription,
-                confirmButtonClass: 'swal2-confirm button-cool',
-                confirmButtonText: 'Cool',
+                confirmButtonClass: "swal2-confirm button-cool",
+                confirmButtonText: "Cool",
                 buttonsStyling: false,
             });
         };
@@ -73,41 +78,60 @@ const displayRiddle = async (riddle) => {
     });
 };
 
-// Answer checker
-const checkAnswer = (userAnswer, correctAnswer) => {
-    return userAnswer.trim().toLowerCase() === correctAnswer.trim().toLowerCase();
-};
-
-// Button Get random riddle
 const getRandomRiddleButton = document.getElementById("getRandomRiddle");
 getRandomRiddleButton.addEventListener("click", async () => {
     const riddle = await getRandomRiddle();
+
+    if (riddle === null) {
+        alert("The site is still under construction. Please check back later for riddles.");
+        return;
+    }
+
+    incorrectAnswers++;
+    updateCounters();
+
     await displayRiddle(riddle);
 
     const userAnswerField = document.getElementById("userAnswer");
-    userAnswerField.className = 'answer-input';
-    userAnswerField.placeholder = 'Your answer';
+    userAnswerField.className = "answer-input";
+    userAnswerField.placeholder = "Your answer";
     const submitButton = document.getElementById("submitAnswer");
-    submitButton.className = 'btn';
+    submitButton.className = "btn";
 
     submitButton.onclick = () => {
         const userAnswer = userAnswerField.value;
         const isCorrect = checkAnswer(userAnswer, riddle.solution);
         const message = document.getElementById("message");
-        const correctAnswerCounter = document.getElementById("correctAnswerCounter");
 
         if (isCorrect) {
             correctAnswers++;
+            incorrectAnswers = 0;
+        } else {
+            correctAnswers = 0;
+            incorrectAnswers++;
+        }
+        updateCounters();
+        const correctAnswerCounter = document.getElementById("correctAnswerCounter");
+
+        if (isCorrect) {
             message.innerText = "Well done!";
+            // Hide the riddle container after a correct answer
+            document.getElementById("riddleContainer").style.display = "none";
+
             if (correctAnswers === 3) {
                 window.location.href = "/your_next_page_url";
             }
             correctAnswerCounter.innerText = `Consecutive correct answers: ${correctAnswers}`;
         } else {
-            correctAnswers = 0;
             message.innerText = "Incorrect answer. Try again.";
             correctAnswerCounter.innerText = `Consecutive correct answers: ${correctAnswers}`;
         }
     };
+    userAnswerField.value = "";
+    document.getElementById("message").innerText = "";
+
     document.getElementById("riddleContainer").style.display = "block";
 });
+
+updateCounters();
+

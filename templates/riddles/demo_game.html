@@ -2,22 +2,22 @@
 
 {% block body %}
 <h1>Welcome on Vicious Clue</h1>
+<h2 style="margin-bottom: 20px">Demonstration</h2>
+<h3 style="margin-bottom: 20px">Answer correctly at 3 riddles consecutively to win the demo game</h3>
+
 <button id="getRandomRiddle" class="btn">Get Random Riddle</button>
 
-<div>
-  <div id="riddleContainer" style="display:none;">
+<div id="riddleContainer" style="display:none;">
     <h2>_______________________________________</h2>
     <p id="riddleDescription" style="margin: 15px 0 15px 0"></p>
     <div id="clueButtons" style="margin-bottom: 15px"></div>
     <input type="text" id="userAnswer" autocomplete="off">
     <button id="submitAnswer">Verify</button>
-  </div>
-  <div id="counterContainer" class="box-flex-column" style="margin-top: 30px; width: auto; display: None">
-    <p id="incorrectAnswerCounter" style="color: #dd4908;"></p>
-    <p id="totalClueRequested" style="color: #dd8a08"></p>
-    <p id="correctConsecutiveAnswerCounter" style="color: #26dd08;"></p>
-    <p id="totalCorrectAnswerCounter" style="color: blanchedalmond"></p>
-  </div>
+
+    <div class="box-flex-column" style="margin-top: 30px; width: auto">
+        <p id="incorrectAnswerCounter" style="color: #dd4908;"></p>
+        <p id="correctAnswerCounter" style="color: #26dd08;"></p>
+    </div>
     <h2>_______________________________________</h2>
 </div>
 
@@ -26,5 +26,5 @@
 {% endblock %}
 
 {% block scripts %}
-<script src="{{ url_for('static', filename='js/game.js') }}"></script>
+<script src="{{ url_for('static', filename='js/demoGame.js') }}"></script>
 {% endblock %}

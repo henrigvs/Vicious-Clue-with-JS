@@ -31,5 +31,6 @@
 <form action="{{ url_for('edit.editRiddle', riddleId=riddle.riddleId) }}" method="GET" style="display: flex; flex-direction: column">
         <button class="btn-confirmation-edit" type="submit">Edit riddle</button>
 </form>
+<button class="play-button"><a href="{{ url_for('createRiddle.createRiddle') }}">Create riddle</a></button>
 
 {% endblock %}

@@ -18,7 +18,7 @@
 
     <form method="POST" action="/edit/{{ riddle.riddleId }}" novalidate id="createRiddleForm">
         {{ form.csrf_token }}
-        <div class="form-row my-2">
+        <div class="box-flex-column">
             {{ form.description.label }} {{ form.description(class='new-value') }}
             {% with errors = form.description.errors %}
                 {% if errors %}
@@ -30,7 +30,7 @@
                 {% endif %}
             {% endwith %}
         </div>
-        <div class="form-row my-2">
+        <div class="box-flex-column">
             {{ form.solution.label }} {{ form.solution(size=30, class='new-value') }}
             {% with errors = form.solution.errors %}
                 {% if errors %}
@@ -43,8 +43,8 @@
             {% endwith %}
         </div>
 
-        <div class="form-row my-2">
-            {{ form.category.label }} {{ form.category(class='new-value') }}
+        <div class="box-flex-column">
+            {{ form.category.label }} {{ form.category(class='btn') }}
             {% with errors = form.category.errors %}
                 {% if errors %}
                     <ul class="errors">
@@ -56,7 +56,7 @@
             {% endwith %}
         </div>
 
-        <div class="form-row my-2">
+        <div class="box-flex-column">
             <div class="clue-container">
                 <div class="clue-wrapper" clue-number="1">
                     <label for="clue-1">Clue</label>
@@ -70,9 +70,9 @@
             </div>
         </div>
 
-        <div class="form-row my-2">
+        <div>
             {{ form.difficulty.label }}
-            <div class="custom-number-input">
+            <div class="box-flex-row">
                 <button type="button" id="decreaseDifficulty" class="btn-edit left">-</button>
                 {{ form.difficulty(id='difficultyInput', class='new-value-difficulty') }}
                 <button type="button" id="increaseDifficulty" class="btn-edit right">+</button>

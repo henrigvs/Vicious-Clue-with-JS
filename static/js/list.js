@@ -1,20 +1,3 @@
-// Fetch allRiddles under JSON format
-const loadRiddlesData = async () => {
-    try {
-        const response = await fetch('/riddles/getAllRiddles');
-
-        if (!response.ok) {
-            throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-
-        const riddlesData = await response.json();
-        return riddlesData;
-    } catch (error) {
-        console.error('Error fetching riddles:', error);
-        return null;
-    }
-};
-
 // Return the array of riddles
 const getRiddlesArray = async () => {
     const response = await fetch('/riddles/getAllRiddles');

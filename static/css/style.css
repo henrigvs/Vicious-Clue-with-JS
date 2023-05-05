@@ -101,6 +101,18 @@ h1 {
     margin-bottom: 10px;
 }
 
+.box-flex-row {
+    display: flex;
+    flex-direction: row;
+    margin: 10px 0 10px 0;
+}
+
+.box-flex-column {
+    display: flex;
+    flex-direction: column;
+    margin: 10px 0 10px 0;
+}
+
 .play-button {
     background-color: transparent;
     border: 2px solid blanchedalmond;
@@ -161,6 +173,11 @@ h1 {
     margin: 5px 10px;
 }
 
+.btn-difficulty {
+    padding: 5px;
+    margin: 0 20px 0 20px;
+}
+
 .btn:hover,
 .btn-list:hover,
 .btn-solution:hover,
@@ -213,20 +230,68 @@ input[type="password"]::placeholder {
     color: blanchedAlmond;
 }
 
+.next-previous-links {
+    display: flex;
+    justify-content: space-between;
+    position: fixed;
+    left: 20%;
+    right: 21%;
+}
 
-button[type="submit"] {
-    width: 100%;
-    background-color: #4caf50;
-    color: white;
-    padding: 14px 20px;
-    margin: 8px 0;
-    border: none;
+.next-previous-links a {
+    text-decoration: none;
+    color: blanchedalmond;
+}
+
+.ownerId {
+    color: blanchedalmond;
+    margin-right: 15px;
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    padding: 10px;
+    font-weight: bold;
+    gap: 10px;
+    color: blanchedalmond;
+    text-decoration: None;
+}
+
+/* Custom styles for the 'Cool' button */
+.swal2-confirm.button-cool {
+    box-sizing: border-box;
+    appearance: none;
+    background-color: blanchedalmond;
+    border: 2px solid blanchedalmond;
+    border-radius: 0.6em;
     cursor: pointer;
-    border-radius: 5px;
+    display: flex;
+    align-self: center;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1;
+    margin: 20px;
+    padding: 10px 20px;
+    text-decoration: none;
+    text-align: center;
+    font-weight: 700;
+    color: #5f6774;
 }
 
-button[type="submit"]:hover {
-    background-color: #45a049;
+.swal2-confirm.button-cool:hover {
+    background: linear-gradient(45deg, blanchedalmond 0, transparent 100%);
+    transition: background 300ms ease-in-out;
+    color: blanchedalmond;
 }
 
+/* Custom styles for the SweetAlert popup title and text */
+.swal2-popup.popup .swal2-title,
+.swal2-popup.popup .swal2-content {
+    color: blanchedalmond;
+}
 
+/* Custom styles for the SweetAlert popup background */
+.swal2-popup.popup {
+    background-color: #5f6774;
+}

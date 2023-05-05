@@ -13,42 +13,19 @@ def getRiddleJSON():  # Retrieve list of riddles from the getAllRiddles endpoint
     return riddles
 
 
-def getNextRiddle(notCorrect):
-    return render_template('riddles/game.html',
-                           notCorrect=notCorrect,
-                           currentRiddle=pointer,
-                           riddle=session['currentRiddle'])
-
-
-@gameBP.route('/', methods=['GET', 'POST'])
+@gameBP.route('/', methods=['GET'])
 def game():
-    global pointer
-    riddles = getRiddleJSON()
-    if request.method == 'POST':
-        answer = request.form.get('answer').strip().lower()
-        riddle = session['currentRiddle']
-
-        if answer == riddle['solution'].lower():
-            pointer += 1
-
-            if pointer - 1 >= len(riddles):
-                pointer = 1
-                return render_template("riddles/game_completed.html")
-
-            else:
-                session['currentRiddle'] = riddles[pointer - 1]
-                return getNextRiddle(notCorrect=False)
-
-        else:
-            return getNextRiddle(notCorrect=True)
-
+    if session.get('userIsConnected'):
+        return render_template('riddles/game.html')
     else:
-        if session.get('userIsConnected') is None:
-            return redirect(url_for('login.loginUser'))
-        session['currentRiddle'] = riddles[pointer - 1]
-        return getNextRiddle(notCorrect=False)
+        return redirect(url_for('login.loginUser'))
 
 
-@gameBP.route('game1', methods=['GET'])
-def game1():
-    return render_template('riddles/game1.html')
+@gameBP.route('demoGame', methods=['GET'])
+def demoGame():
+    return render_template('riddles/demo_game.html')
+
+
+@gameBP.route('demoGameCompleted', methods=['GET'])
+def demoGameCompleted():
+    return render_template('riddles/demo_completed.html')
