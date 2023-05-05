@@ -4,7 +4,8 @@ from src.backend.users.domain.Role import Role
 class UserDTO:
 
     def __init__(self, userId: str, firstName: str, lastName: str, password: str, email: str, role: Role,
-                 isConnected: bool, bestScore: int):
+                 isConnected: bool, correctAnswer: int, incorrectAnswers: int, clueRequested: int,
+                 consecutiveSeriesOfThree: int, bestScore: int):
         self.userId = userId
         self.firstName = firstName
         self.lastName = lastName
@@ -12,6 +13,10 @@ class UserDTO:
         self.email = email
         self.role = role
         self.isConnected = isConnected
+        self.correctAnswer = correctAnswer
+        self.incorrectAnswers = incorrectAnswers
+        self.clueRequested = clueRequested
+        self.consecutiveSeriesOfThree = consecutiveSeriesOfThree
         self.bestScore = bestScore
 
     def to_dict(self) -> dict:
@@ -23,5 +28,9 @@ class UserDTO:
             'email': self.email,
             'role': self.role.label,
             'isConnected': self.isConnected,
-            'bestScore': self.bestScore
+            'correctAnswer': self.correctAnswer,
+            'incorrectAnswers': self.incorrectAnswers,
+            'clueRequested': self.clueRequested,
+            'consecutiveSeriesOfThree': self.consecutiveSeriesOfThree,
+            'score': self.bestScore
         }

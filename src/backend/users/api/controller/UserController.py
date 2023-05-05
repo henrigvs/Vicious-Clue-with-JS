@@ -48,14 +48,19 @@ def deleteUserByUserId(userId):
 @userBP.route('/edit/<user_id>', methods=['PUT'])
 def editUser(user_id):
     data = request.get_json()
-    updatingUserDTO = UserDTO(user_id,
-                              data['firstName'],
-                              data['lastName'],
-                              data['password'],
-                              data['email'],
-                              _identifyRole(data['role']),
-                              data['isConnected'],
-                              data['bestScore'])
+    updatingUserDTO = UserDTO(userId=user_id,
+                              firstName=data['firstName'],
+                              lastName=data['lastName'],
+                              password=data['password'],
+                              email=data['email'],
+                              role=_identifyRole(data['role']),
+                              isConnected=data['isConnected'],
+                              bestScore=data['bestScore'],
+                              correctAnswer=data['correctAnswer'],
+                              incorrectAnswers=data['incorrectAnswers'],
+                              clueRequested=data['clueRequested'],
+                              consecutiveSeriesOfThree=data['consecutiveSeriesOfThree']
+                              )
     userDTO = userService.editUser(updatingUserDTO)
     return _jsonifyUserDTO(userDTO, 200, "userId unknown", 404)
 
@@ -83,10 +88,13 @@ def deleteUser(user_id):
     return _jsonifyUserDTO(userDTO, 200, "userId unknown", 404)
 
 
-@userBP.route('/setBestScore/<user_id>', methods=['PUT'])
-def setBestScore(user_id):
-    bestScore = request.get_json()['bestScore']
-    userDTO = userService.setBestScore(user_id, bestScore)
+@userBP.route('/setScore/<user_id>', methods=['PUT'])
+def setScore(user_id):
+    correctAnswer = request.get_json()['correctAnswer']
+    incorrectAnswers = request.get_json()['incorrectAnswers']
+    clueRequested = request.get_json()['clueRequested']
+    consecutiveSeriesOfThree = request.get_json()['consecutiveSeriesOfThree']
+    userDTO = userService.setScore(user_id, correctAnswer, incorrectAnswers, clueRequested, consecutiveSeriesOfThree)
     return _jsonifyUserDTO(userDTO, 200, "userId unknown", 404)
 
 

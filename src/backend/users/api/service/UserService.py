@@ -17,13 +17,18 @@ class UserService:
         return self.userMapper.toDTO(user)
 
     def editUser(self, updatingUserDTO: UserDTO) -> UserDTO:
-        user = User(firstName=updatingUserDTO.firstName,
-                    lastName=updatingUserDTO.lastName,
-                    password=updatingUserDTO.password,
-                    email=updatingUserDTO.email,
-                    role=updatingUserDTO.role,
-                    isConnected=updatingUserDTO.isConnected,
-                    bestScore=updatingUserDTO.bestScore)
+        user = User(
+            firstName=updatingUserDTO.firstName,
+            lastName=updatingUserDTO.lastName,
+            password=updatingUserDTO.password,
+            email=updatingUserDTO.email,
+            role=updatingUserDTO.role,
+            isConnected=updatingUserDTO.isConnected,
+            correctAnswer=updatingUserDTO.correctAnswer,
+            incorrectAnswers=updatingUserDTO.incorrectAnswers,
+            clueRequested=updatingUserDTO.clueRequested,
+            consecutiveSeriesOfThree=updatingUserDTO.consecutiveSeriesOfThree,
+            bestScore=updatingUserDTO.bestScore)
         updatedUser = self.userRepository.editUser(user, updatingUserDTO.userId)
         return self.userMapper.toDTO(updatedUser)
 
@@ -51,6 +56,11 @@ class UserService:
         deletedUser = self.userRepository.deleteUserByUserId(userId)
         return self.userMapper.toDTO(deletedUser)
 
-    def setBestScore(self, userId: str, bestScore: str):
-        user = self.userRepository.setBestScore(userId, bestScore)
+    def setScore(self, userId: str, correctAnswer: int, incorrectAnswer: int, clueRequested: int,
+                 consecutiveSeriesOfThree: int):
+        user = self.userRepository.setScore(userId=userId,
+                                            correctAnswer=correctAnswer,
+                                            incorrectAnswer=incorrectAnswer,
+                                            clueRequested=clueRequested,
+                                            consecutiveSeriesOfThree=consecutiveSeriesOfThree)
         return self.userMapper.toDTO(user)

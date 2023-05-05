@@ -12,9 +12,14 @@ class UserModel(db.Model):
     role = db.Column(db.String(10))
     isConnected = db.Column(db.Boolean)
     bestScore = db.Column(db.Integer)
+    correctAnswer = db.Column(db.Integer)
+    incorrectAnswers = db.Column(db.Integer)
+    clueRequested = db.Column(db.Integer)
+    consecutiveSeriesOfThree = db.Column(db.Integer)
 
     def __init__(self, user_id: str, firstName: str, lastName: str, password: str, email: str, role: str,
-                 isConnected: bool, bestScore: int):
+                 isConnected: bool, correctAnswer: int, incorrectAnswers: int, clueRequested: int, consecutiveSeriesOfThree: int,
+                 bestScore: int):
         self.user_id = user_id
         self.firstName = firstName
         self.lastName = lastName
@@ -23,6 +28,10 @@ class UserModel(db.Model):
         self.role = role
         self.isConnected = isConnected
         self.bestScore = bestScore
+        self.correctAnswer = correctAnswer
+        self.incorrectAnswers = incorrectAnswers
+        self.clueRequested = clueRequested
+        self.consecutiveSeriesOfThree = consecutiveSeriesOfThree
 
     def toRealUserObject(self):
         getRole = None
@@ -39,5 +48,9 @@ class UserModel(db.Model):
             email=self.email,
             role=getRole,
             isConnected=self.isConnected,
-            bestScore=self.bestScore
+            bestScore=self.bestScore,
+            correctAnswer=self.correctAnswer,
+            incorrectAnswers=self.incorrectAnswers,
+            clueRequested=self.clueRequested,
+            consecutiveSeriesOfThree=self.consecutiveSeriesOfThree
         )

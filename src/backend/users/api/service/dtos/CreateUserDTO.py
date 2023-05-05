@@ -10,4 +10,3 @@ class CreateUserDTO:
         self.email = email
         self.role = role
         self.isConnected = isConnected
-        self.bestScore = 0

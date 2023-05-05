@@ -22,6 +22,10 @@ class UserRepository:
             password=user.password,
             email=user.email,
             role=user.role.label,  # Important to add label !
+            correctAnswer=user.correctAnswer,
+            incorrectAnswers=user.incorrectAnswers,
+            clueRequested=user.clueRequested,
+            consecutiveSeriesOfThree=user.consecutiveSeriesOfThree,
             isConnected=user.isConnected,
             bestScore=user.bestScore
         )
@@ -44,7 +48,6 @@ class UserRepository:
                 UserModel.email: user.email,
                 UserModel.role: user.role.label,
                 UserModel.isConnected: user.isConnected,
-                UserModel.bestScore: user.bestScore
             }
         )
         db.session.commit()
@@ -106,11 +109,37 @@ class UserRepository:
             return user.toRealUserObject()
 
     @staticmethod
-    def setBestScore(userId: str, bestScore: int):
+    def setScore(userId: str, correctAnswer: int, incorrectAnswer: int, clueRequested: int, consecutiveSeriesOfThree: int):
         user = UserRepository.getUserByUserId(userId)
         if user is None:
             return None
         else:
-            db.session.query(UserModel).filter(UserModel.user_id == userId).update({UserModel.bestScore: bestScore})
+            # Calculate score
+            score = 100*consecutiveSeriesOfThree + 50*correctAnswer - 20*incorrectAnswer - 10*clueRequested
+            if score < 0:
+                score = 0
+
+            db.session.query(UserModel).filter(UserModel.user_id == userId).update(
+                {
+                    UserModel.bestScore: score,
+                    UserModel.correctAnswer: correctAnswer,
+                    UserModel.incorrectAnswers: incorrectAnswer,
+                    UserModel.clueRequested: clueRequested,
+                    UserModel.consecutiveSeriesOfThree: consecutiveSeriesOfThree,
+                }
+            )
             db.session.commit()
             return UserRepository.getUserByUserId(userId)
+
+
+'''
+Formula to compute score
+------------------------
+Incorrect answer : - 20 points
+Clue requested : - 10 points
+Correct answer : + 50 points
+Series of 3 : + 100 points
+'''
+
+
+
