@@ -17,6 +17,7 @@
     <p id="totalClueRequested" style="color: #dd8a08"></p>
     <p id="correctConsecutiveAnswerCounter" style="color: #26dd08;"></p>
     <p id="totalCorrectAnswerCounter" style="color: blanchedalmond"></p>
+    <p id="totalScore" style="color: blanchedalmond; margin-top: 25px"></p>
   </div>
     <h2>_______________________________________</h2>
 </div>
@@ -26,5 +27,9 @@
 {% endblock %}
 
 {% block scripts %}
+<script>
+  const userId = "{{ userId }}";
+  console.log(userId);
+</script>
 <script src="{{ url_for('static', filename='js/game.js') }}"></script>
 {% endblock %}

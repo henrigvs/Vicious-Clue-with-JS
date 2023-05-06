@@ -1,6 +1,7 @@
-from flask import Blueprint, request, render_template, session, redirect, url_for
+from flask import Blueprint, render_template, session, redirect, url_for
+
+from application.static_methods import JSONToERiddles
 from resources.config.properties import HOST, PORT
-from src.application.static_methods import JSONToERiddles
 import requests
 
 gameBP = Blueprint('game', __name__)
@@ -16,9 +17,9 @@ def getRiddleJSON():  # Retrieve list of riddles from the getAllRiddles endpoint
 @gameBP.route('/', methods=['GET'])
 def game():
     if session.get('userIsConnected'):
-        return render_template('riddles/game.html')
+        return render_template('riddles/game.html', userId=session.get('userId'))
     else:
-        return redirect(url_for('login.loginUser'))
+        return redirect(url_for('game.demoGame'))
 
 
 @gameBP.route('demoGame', methods=['GET'])

@@ -1,8 +1,27 @@
 // Return the array of riddles
 const getRiddlesArray = async () => {
-    const response = await fetch('/riddles/getAllRiddles');
-    return await response.json();
+    try {
+        let response = null;
+        if (userRole === "admin") {
+            response = await fetch('/riddles/getAllRiddles');
+        } else {
+            console.log(`userId = ${userId}`);
+            response = await fetch(`/riddles/getAllRiddlesOf/${userId}`);
+        }
+
+        if (response.ok) {
+            const responseData = await response.json();
+            return responseData;
+        } else {
+            console.error(`Error fetching riddles: ${response.status} ${response.statusText}`);
+            return [];
+        }
+    } catch (error) {
+        console.error(`Error fetching riddles: ${error.message}`);
+        return [];
+    }
 };
+
 
 // for debug
 getRiddlesArray().then(riddles => {
@@ -61,7 +80,7 @@ async function displayRiddles(riddles) {
             let ownerIdCell = document.createElement('td');
             let ownerLink = document.createElement('a');
             ownerLink.setAttribute('class', 'ownerId');
-            ownerLink.setAttribute('href', `/UserManagement/userDetails/${riddle.ownerId}`);
+            ownerLink.setAttribute('href', `/UserManagement/details/${riddle.ownerId}`);
             ownerLink.textContent = riddle.ownerId;
             ownerIdCell.appendChild(ownerLink);
             row.appendChild(ownerIdCell);
@@ -84,7 +103,7 @@ async function displayRiddles(riddles) {
 
         // Column Riddles difficulty
         let difficultyCell = document.createElement('td');
-        difficultyCell.setAttribute('class', 'col-difficulty');
+        difficultyCell.style.width = "100px";
         let decreaseButton = document.createElement('button');
         decreaseButton.setAttribute('class', 'btn-difficulty');
         decreaseButton.setAttribute('data-action', 'decrease');

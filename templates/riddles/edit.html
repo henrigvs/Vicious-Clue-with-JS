@@ -19,10 +19,10 @@
     <form method="POST" action="/edit/{{ riddle.riddleId }}" novalidate id="createRiddleForm">
         {{ form.csrf_token }}
         <div class="box-flex-column">
-            {{ form.description.label }} {{ form.description(class='new-value') }}
+            {{ form.description.label }} {{ form.description }}
             {% with errors = form.description.errors %}
                 {% if errors %}
-                    <ul class="errors">
+                    <ul class="errors" style="display: none">
                         {% for error in errors %}
                             <li>{{ error }}</li>
                         {% endfor %}
@@ -31,10 +31,10 @@
             {% endwith %}
         </div>
         <div class="box-flex-column">
-            {{ form.solution.label }} {{ form.solution(size=30, class='new-value') }}
+            {{ form.solution.label }} {{ form.solution }}
             {% with errors = form.solution.errors %}
                 {% if errors %}
-                    <ul class="errors">
+                    <ul class="errors" style="display: none">
                         {% for error in errors %}
                             <li>{{ error }}</li>
                         {% endfor %}
@@ -47,7 +47,7 @@
             {{ form.category.label }} {{ form.category(class='btn') }}
             {% with errors = form.category.errors %}
                 {% if errors %}
-                    <ul class="errors">
+                    <ul class="errors" style="display: none">
                         {% for error in errors %}
                             <li>{{ error }}</li>
                         {% endfor %}
@@ -74,12 +74,12 @@
             {{ form.difficulty.label }}
             <div class="box-flex-row">
                 <button type="button" id="decreaseDifficulty" class="btn-edit left">-</button>
-                {{ form.difficulty(id='difficultyInput', class='new-value-difficulty') }}
+                {{ form.difficulty(id='difficultyInput') }}
                 <button type="button" id="increaseDifficulty" class="btn-edit right">+</button>
             </div>
             {% with errors = form.difficulty.errors %}
                 {% if errors %}
-                    <ul class="errors">
+                    <ul class="errors" style="display: none">
                         {% for error in errors %}
                             <li>{{ error }}</li>
                         {% endfor %}

@@ -1,48 +1,54 @@
-const input = document.getElementById("difficulty");
+$(document).ready(function () {
+    let counter = 1;
 
-function addClue(clueDescription = "") { // Add the optional parameter
-    const clueContainer = document.getElementById("clueContainer");
-    const clueNumber = clueContainer.childElementCount + 1;
+    $("#addClueButton").click(function () {
+        if (counter < 3) {
+            const $newClue = $(".clue-wrapper").first().clone();
+            $newClue.find("input").val('');
+            const newClueNumber = counter + 1;
+            $newClue.attr("clue-number", newClueNumber)
+            $newClue.find("label").text(`Clue n° ${newClueNumber}`);
+            $(".clue-container").append($newClue);
+            counter++;
+        }
+    });
+    $("#removeClueButton").click(function () {
+        if (counter > 1) {
+            $(".clue-wrapper").last().remove();
+            counter--;
+        }
+    })
+});
 
-    const clueWrapper = document.createElement("div");
-    clueWrapper.classList.add("clue-wrapper");
-    clueWrapper.setAttribute("clue-number", clueNumber);
-
-    const label = document.createElement("label");
-    label.setAttribute("for", "clue-" + clueNumber);
-    label.innerText = "Clue";
-
-    const input = document.createElement("input");
-    input.type = "text";
-    input.id = "clue-" + clueNumber;
-    input.size = "30";
-    input.classList.add("new-value");
-    input.value = clueDescription; // Set the initial value to the given clueDescription
-
-    clueWrapper.appendChild(label);
-    clueWrapper.appendChild(input);
-    clueContainer.appendChild(clueWrapper);
-}
-
-function removeClue() {
-    const clueContainer = document.getElementById("clueContainer");
-    if (clueContainer.childElementCount > 1) {
-        clueContainer.removeChild(clueContainer.lastChild);
-    }
-}
 
 function submitRiddle() {
     const clues = [];
-    const clueContainer = document.getElementById("clueContainer");
+    $('.clue-wrapper').each(
+        function () {
+            const RiddleElements = $(this).find('.new-value').val();
+            clues.push({description: RiddleElements});
+        }
+    );
 
-    for (const clueWrapper of clueContainer.children) {
-        const input = clueWrapper.querySelector("input");
-        clues.push(input.value);
-    }
-
-    const hiddenClues = document.querySelector(".hidden-clues");
-    hiddenClues.value = JSON.stringify(clues);
+    $('#clues').val(JSON.stringify(clues));
+    $('#createRiddleForm').submit();
 }
 
-document.getElementById("addClueButton").addEventListener("click", () => addClue()); // Call addClue without arguments
-document.getElementById("removeClueButton").addEventListener("click", removeClue);
+document.getElementById("decreaseDifficulty").addEventListener("click", function () {
+    let difficultyInput = document.getElementById("difficultyInput");
+    let difficulty = parseInt(difficultyInput.value, 10);
+    if (difficulty > 1) {
+        difficulty -= 1;
+        difficultyInput.value = difficulty;
+    }
+});
+
+document.getElementById("increaseDifficulty").addEventListener("click", function () {
+    let difficultyInput = document.getElementById("difficultyInput");
+    let difficulty = parseInt(difficultyInput.value, 10);
+    if (difficulty < 5) {
+        difficulty += 1;
+        difficultyInput.value = difficulty;
+    }
+});
+

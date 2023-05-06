@@ -1,7 +1,9 @@
+import binascii
 import os
 
 from flask import Flask, render_template
 
+from application.component.users.Ranking import rankingBP
 from resources.database.database import init_db
 from resources.config.properties import PORT, HOST
 from src.application.component.riddles.Create import createRiddleBP
@@ -26,7 +28,7 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 init_db(app)
 
 # If change port here, should modify into blueprints
-app.secret_key = "secretkey" # binascii.hexlify(os.urandom(24))
+app.secret_key = binascii.hexlify(os.urandom(24))
 
 app.register_blueprint(gameBP, url_prefix='/game')
 app.register_blueprint(riddleBP, url_prefix='/riddles')
@@ -38,7 +40,7 @@ app.register_blueprint(signUpBP, url_prefix='/signUp')
 app.register_blueprint(createRiddleBP, url_prefix='/createRiddle')
 app.register_blueprint(UserManagementBP, url_prefix='/UserManagement')
 app.register_blueprint(editUserBP, url_prefix='/editUser')
-
+app.register_blueprint(rankingBP, url_prefix='/ranking')
 
 @app.errorhandler(404)
 def page_not_found(e):

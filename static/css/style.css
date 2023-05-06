@@ -55,11 +55,11 @@ footer {
 .menu-welcome,
 .menu-play,
 .menu-list-of-enigma,
-.menu-rules {
+.menu-rules{
     margin-right: 20px;
 }
 
-.menu-rules {
+.menu-ranking {
     margin-right: 30px;
 }
 
@@ -78,6 +78,14 @@ footer {
 .menu a:hover,
 .login a:hover {
     color: lightslategrey;
+}
+
+.detective-container{
+    margin: 20px 0 20px 0;
+}
+
+.detective-container img {
+    width: 30%;
 }
 
 main {
@@ -163,8 +171,8 @@ h1 {
     background-color: transparent;
     border: 2px solid blanchedalmond;
     color: blanchedalmond;
-    font-size: 16px;
-    padding: 10px 20px;
+    font-size: 12px;
+    padding: 10px 10px;
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s ease-in-out;
@@ -175,7 +183,7 @@ h1 {
 
 .btn-difficulty {
     padding: 5px;
-    margin: 0 20px 0 20px;
+    margin: 0 10px 0 10px;
 }
 
 .btn:hover,
@@ -247,6 +255,8 @@ input[type="password"]::placeholder {
     color: blanchedalmond;
     margin-right: 15px;
 }
+
+
 
 .pagination {
     display: flex;

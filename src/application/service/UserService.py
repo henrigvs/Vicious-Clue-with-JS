@@ -31,7 +31,8 @@ class UserService:
 
     @staticmethod
     def editUser(userId: str, firstName: str, lastName: str, email: str, password: str, role: str,
-                 isConnected: str, bestScore: int) -> Response:
+                 isConnected: str, bestScore: int, clueRequested: int, consecutiveSeriesOfThree: int,
+                 correctAnswer: int, incorrectAnswers: int) -> Response:
         payload = {
             "firstName": firstName,
             "lastName": lastName,
@@ -39,7 +40,11 @@ class UserService:
             "password": password,
             "role": role,
             "isConnected": isConnected,
-            "bestScore": bestScore
+            "bestScore": bestScore,
+            "clueRequested": clueRequested,
+            "consecutiveSeriesOfThree": consecutiveSeriesOfThree,
+            "correctAnswer": correctAnswer,
+            "incorrectAnswers": incorrectAnswers
         }
         return requests.put(f"http://{HOST}:{PORT}/users/edit/{userId}", json=payload)
 

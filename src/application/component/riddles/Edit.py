@@ -15,7 +15,7 @@ def editRiddle(riddleId):
     global allRiddles
     riddle = RiddleService.getRiddleById(riddleId).json()
     ownerId = riddle['ownerId']
-    form = RiddleForm(submit_label="Edit Riddle")
+    form = RiddleForm()
 
     if form.validate_on_submit():
         # Fetch riddle from form
@@ -29,7 +29,6 @@ def editRiddle(riddleId):
         # Call riddle API to edit riddle in DB
         RiddleService.editRiddle(riddleId, description, solution, clues, difficulty, ownerId, category)
         return redirect(url_for('list.getList'))
-
 
     else:
         # Retrieve all riddles id depending on admin or player (all or owned)
@@ -47,7 +46,6 @@ def editRiddle(riddleId):
                 nextRiddleId = allRiddlesId[idx + 1]
 
         # Prefill the form with the riddle details
-
         form.description.data = riddle['description']
         form.solution.data = riddle['solution']
         form.clues.data = json.dumps(riddle['clues'])

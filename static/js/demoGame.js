@@ -22,7 +22,7 @@ const updateCounters = () => {
     const incorrectAnswerCounter = document.getElementById("incorrectAnswerCounter");
 
     correctAnswerCounter.innerText = `Consecutive correct answers: ${correctAnswers}`;
-    incorrectAnswerCounter.innerText = `Consecutive incorrect answers or skipped riddles: ${incorrectAnswers}`;
+    incorrectAnswerCounter.innerText = `Incorrect answers or skipped riddles: ${incorrectAnswers}`;
 };
 
 const getRandomRiddle = async () => {
@@ -38,9 +38,9 @@ const getRandomRiddle = async () => {
 
     do {
         randomIndex = pickANumber(riddles.length - 1);
-    } while (lastRiddleId === riddles[randomIndex]);
+    } while (lastRiddleId === riddles[randomIndex].riddleId);
 
-    lastRiddleId = riddles[randomIndex];
+    lastRiddleId = riddles[randomIndex].riddleId;
     return riddles[randomIndex];
 };
 
@@ -119,7 +119,7 @@ getRandomRiddleButton.addEventListener("click", async () => {
             document.getElementById("riddleContainer").style.display = "none";
 
             if (correctAnswers === 3) {
-                window.location.href = "/your_next_page_url";
+                window.location.href = "/game/demoGameCompleted";
             }
             correctAnswerCounter.innerText = `Consecutive correct answers: ${correctAnswers}`;
         } else {

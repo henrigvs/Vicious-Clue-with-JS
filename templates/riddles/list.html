@@ -45,11 +45,11 @@
 
 
 {% block scripts %}
-<script src="{{ url_for('static', filename='js/list.js') }}"></script>
 <script>
     const emptyListURL = "{{ url_for('list.emptyList') }}";
     const userRole = "{{ session['userRole'] }}";
+    const userId = "{{ session['userId'] }}";
     const riddlesPerPage = 5;
-    //displayRiddles();
 </script>
+<script src="{{ url_for('static', filename='js/list.js') }}"></script>
 {% endblock %}

@@ -3,9 +3,10 @@
 {% block body %}
 
 <h1>Welcome to the best escape game ever</h1>
-<a class="logo" href="/"><img src="{{ url_for('static', filename='img/logo3-big.png') }}" alt="Logo"></a>
-
-<button class="play-button"><a href="{{ url_for('rules') }}">Rules</a></button>
+<div class="detective-container">
+    <img src="{{ url_for('static', filename='img/detective2.png') }}" alt="Logo">
+</div>
+<button class="play-button"><a href="/game">Play</a></button>
 
 {% endblock %}
 

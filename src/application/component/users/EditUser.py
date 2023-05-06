@@ -17,6 +17,10 @@ def editUser(playerId: str):
     role = data.get('role')
     isConnected = data.get('isConnected')
     bestScore = data.get('bestScore')
+    clueRequested = data.get('clueRequested')
+    consecutiveSeriesOfThree = data.get('consecutiveSeriesOfThree')
+    correctAnswer = data.get('correctAnswer')
+    incorrectAnswer = data.get('incorrectAnswers')
 
     # Fetch inputs from form
     if form.validate_on_submit():
@@ -26,7 +30,8 @@ def editUser(playerId: str):
         password = generate_password_hash(form.password.data, "sha256")
 
         # Call the user API to edit player in BP
-        response = UserService.editUser(playerId, firstName, lastName, email, password, role, isConnected, bestScore)
+        response = UserService.editUser(playerId, firstName, lastName, email, password, role, isConnected, bestScore,
+                                        clueRequested, consecutiveSeriesOfThree, correctAnswer, incorrectAnswer)
 
         # Handle Http response
         if response.status_code == 200:
