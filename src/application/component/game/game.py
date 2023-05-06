@@ -1,6 +1,5 @@
 from flask import Blueprint, render_template, session, redirect, url_for
-
-from application.static_methods import JSONToERiddles
+from src.application.static_methods import JSONToERiddles
 from resources.config.properties import HOST, PORT
 import requests
 

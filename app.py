@@ -3,13 +3,12 @@ import os
 
 from flask import Flask, render_template
 
-from application.component.users.Ranking import rankingBP
+from src.application.component.users.Ranking import rankingBP
 from resources.database.database import init_db
 from resources.config.properties import PORT, HOST
 from src.application.component.riddles.Create import createRiddleBP
 from src.application.component.riddles.Edit import editBP
 from src.application.component.riddles.list import listBP
-
 from src.application.component.game.game import gameBP
 from src.application.component.users.EditUser import editUserBP
 from src.application.component.users.LoginUser import loginBP
@@ -23,7 +22,8 @@ app.config['TEMPLATES_AUTO_RELOAD'] = True
 basedir = os.path.abspath(os.path.dirname(__file__))
 
 # Configure and init DB
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'resources/database', 'vicious_clue_database.db')
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'resources/database',
+                                                                    'vicious_clue_database.db')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 init_db(app)
 
@@ -41,6 +41,7 @@ app.register_blueprint(createRiddleBP, url_prefix='/createRiddle')
 app.register_blueprint(UserManagementBP, url_prefix='/UserManagement')
 app.register_blueprint(editUserBP, url_prefix='/editUser')
 app.register_blueprint(rankingBP, url_prefix='/ranking')
+
 
 @app.errorhandler(404)
 def page_not_found(e):
